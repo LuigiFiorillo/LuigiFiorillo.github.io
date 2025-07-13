@@ -65,20 +65,19 @@
     /* Styles for the "inner card" */
     #auth-section, #protected-content {
       max-width: 500px;
-      width: 100%; /* Ensure it takes full width up to max-width */
-      padding: 2rem; /* Reduced padding slightly for a tighter look */
+      width: calc(100% - 40px); /* Adjust width to account for 20px margin on each side */
+      margin: 20px; /* Add margin on all sides */
+      padding: 2rem;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      box-sizing: border-box; /* Include padding in the width calculation */
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
     }
     #auth-section {
       text-align: center;
-      /* No margin-top here, flexbox handles centering */
     }
     #protected-content {
       display: none;
-      /* No margin-top here, flexbox handles centering */
     }
     input[type="password"] {
       padding: 0.7rem;
