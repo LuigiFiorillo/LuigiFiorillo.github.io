@@ -1,1 +1,85 @@
-<h1>Hello world 🌍</h1>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista Nozze - Luigi & Giovanna</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .info-block {
+      margin-bottom: 1.5rem;
+    }
+    .label {
+      font-weight: bold;
+    }
+    .data-copy {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+    }
+    button {
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #e0c7b2;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #d0b29d;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista Nozze Luigi & Giovanna</h1>
+
+  <div class="info-block">
+    <div class="label">IBAN</div>
+    <div class="data-copy">
+      <span id="iban">IT99X1234567890123456789012</span>
+      <button onclick="copyText('iban')">Copia</button>
+    </div>
+  </div>
+
+  <div class="info-block">
+    <div class="label">Beneficiario</div>
+    <div class="data-copy">
+      <span id="beneficiario">Luigi e Giovanna</span>
+      <button onclick="copyText('beneficiario')">Copia</button>
+    </div>
+  </div>
+
+  <div class="info-block">
+    <div class="label">Causale</div>
+    <div class="data-copy">
+      <span id="causale">Lista nozze Luigi & Giovanna</span>
+      <button onclick="copyText('causale')">Copia</button>
+    </div>
+  </div>
+
+  <script>
+    function copyText(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copiato: " + text);
+      });
+    }
+  </script>
+</body>
+</html>
