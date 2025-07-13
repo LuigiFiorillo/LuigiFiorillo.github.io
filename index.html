@@ -13,13 +13,11 @@
       background-position: center;
       background-attachment: fixed;
       color: #333;
-      padding: 2rem;
-      max-width: 500px;
-      margin: 0 auto;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      border-radius: 10px;
-      margin-top: 50px;
-      margin-bottom: 50px;
+      display: flex; /* Use flexbox to center the content vertically and horizontally */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Make body at least full viewport height */
+      margin: 0; /* Remove default body margin */
       position: relative; /* Needed for snackbar positioning */
     }
     h1 {
@@ -64,19 +62,23 @@
     .copy-btn.copied {
       color: green;
     }
-    #auth-section {
-      text-align: center;
-      padding: 3rem 1rem;
+    /* Styles for the "inner card" */
+    #auth-section, #protected-content {
+      max-width: 500px;
+      width: 100%; /* Ensure it takes full width up to max-width */
+      padding: 2rem; /* Reduced padding slightly for a tighter look */
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-sizing: border-box; /* Include padding in the width calculation */
+    }
+    #auth-section {
+      text-align: center;
+      /* No margin-top here, flexbox handles centering */
     }
     #protected-content {
       display: none;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      /* No margin-top here, flexbox handles centering */
     }
     input[type="password"] {
       padding: 0.7rem;
@@ -85,7 +87,7 @@
       border-radius: 6px;
       margin-bottom: 1rem;
       width: 220px;
-      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      box-sizing: border-box;
     }
     button.auth-btn {
       padding: 0.8rem 1.5rem;
