@@ -13,12 +13,13 @@
       background-position: center;
       background-attachment: fixed;
       color: #333;
-      display: flex; /* Use flexbox to center the content vertically and horizontally */
-      justify-content: center;
-      align-items: center;
+      /* Rimuoviamo il flexbox dal body per gestire la centratura con position/transform */
+      /* display: flex; */
+      /* justify-content: center; */
+      /* align-items: center; */
       min-height: 100vh; /* Make body at least full viewport height */
       margin: 0; /* Remove default body margin */
-      position: relative; /* Needed for snackbar positioning */
+      position: relative; /* Needed for snackbar positioning AND for absolute positioning of card */
     }
     h1 {
       font-family: 'Great Vibes', cursive; /* Elegant font for names/headings */
@@ -66,15 +67,24 @@
     #auth-section, #protected-content {
       max-width: 500px;
       width: calc(100% - 40px); /* Adjust width to account for 20px margin on each side */
-      margin: 20px; /* Add margin on all sides */
+      margin: 20px auto; /* Add margin top/bottom and auto for left/right to center horizontally */
       padding: 2rem;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       box-sizing: border-box; /* Include padding and border in the element's total width and height */
+
+      /* Nuovi stili per la centratura verticale */
+      position: absolute; /* Posizionamento assoluto rispetto al body */
+      top: 50%; /* Inizia al 50% dell'altezza del body */
+      left: 50%; /* Inizia al 50% della larghezza del body */
+      transform: translate(-50%, -50%); /* Sposta l'elemento indietro del 50% della sua propria larghezza e altezza */
+      /* Aggiungere una z-index per assicurarsi che sia sopra lo sfondo in caso di problemi */
+      z-index: 2;
     }
     #auth-section {
       text-align: center;
+      display: block; /* Assicurati che sia block per essere posizionato */
     }
     #protected-content {
       display: none;
@@ -119,7 +129,7 @@
       border-radius: 2px; /* Rounded borders */
       padding: 16px; /* Padding */
       position: fixed; /* Sit on top of the screen */
-      z-index: 1; /* Add a z-index if needed (most snacks will need this) */
+      z-index: 10; /* Higher z-index to be sure it's above other elements */
       left: 50%; /* Center the snackbar */
       bottom: 30px; /* 30px from the bottom */
       font-size: 1rem;
@@ -157,38 +167,40 @@
   </style>
 </head>
 <body>
-  <div id="auth-section">
-    <h2>Inserisci il PIN per accedere</h2>
-    <input type="password" id="pin-input" placeholder="PIN" />
-    <br />
-    <button class="auth-btn" onclick="checkPIN()">Accedi</button>
-    <p id="auth-error"></p>
-  </div>
-
-  <div id="protected-content">
-    <h1>Lista Nozze Luigi & Giovanna</h1>
-
-    <div class="info-block">
-      <div class="label">IBAN</div>
-      <div class="data-copy">
-        <span id="iban">IT99X1234567890123456789012</span>
-        <button class="copy-btn" onclick="copyText('iban', this, 'IBAN copiato!')">📋</button>
-      </div>
+  <div id="main-content-wrapper">
+    <div id="auth-section">
+      <h2>Inserisci il PIN per accedere</h2>
+      <input type="password" id="pin-input" placeholder="PIN" />
+      <br />
+      <button class="auth-btn" onclick="checkPIN()">Accedi</button>
+      <p id="auth-error"></p>
     </div>
 
-    <div class="info-block">
-      <div class="label">Beneficiario</div>
-      <div class="data-copy">
-        <span id="beneficiario">Luigi e Giovanna</span>
-        <button class="copy-btn" onclick="copyText('beneficiario', this, 'Beneficiario copiato!')">📋</button>
-      </div>
-    </div>
+    <div id="protected-content">
+      <h1>Lista Nozze Luigi & Giovanna</h1>
 
-    <div class="info-block">
-      <div class="label">Causale</div>
-      <div class="data-copy">
-        <span id="causale">Lista nozze Luigi & Giovanna</span>
-        <button class="copy-btn" onclick="copyText('causale', this, 'Causale copiata!')">📋</button>
+      <div class="info-block">
+        <div class="label">IBAN</div>
+        <div class="data-copy">
+          <span id="iban">IT99X1234567890123456789012</span>
+          <button class="copy-btn" onclick="copyText('iban', this, 'IBAN copiato!')">📋</button>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="label">Beneficiario</div>
+        <div class="data-copy">
+          <span id="beneficiario">Luigi e Giovanna</span>
+          <button class="copy-btn" onclick="copyText('beneficiario', this, 'Beneficiario copiato!')">📋</button>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="label">Causale</div>
+        <div class="data-copy">
+          <span id="causale">Lista nozze Luigi & Giovanna</span>
+          <button class="copy-btn" onclick="copyText('causale', this, 'Causale copiata!')">📋</button>
+        </div>
       </div>
     </div>
   </div>
