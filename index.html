@@ -23,6 +23,7 @@
     }
     .label {
       font-weight: bold;
+      margin-bottom: 0.3rem;
     }
     .data-copy {
       display: flex;
@@ -33,52 +34,103 @@
       padding: 0.75rem 1rem;
       border-radius: 8px;
     }
-    button {
-      padding: 0.4rem 0.8rem;
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .copy-btn.copied {
+      color: green;
+    }
+    #auth-section {
+      text-align: center;
+      margin-top: 100px;
+    }
+    #protected-content {
+      display: none;
+    }
+    input[type="password"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      width: 200px;
+    }
+    button.auth-btn {
+      padding: 0.5rem 1rem;
+      background-color: #e0c7b2;
       border: none;
       border-radius: 6px;
-      background-color: #e0c7b2;
       cursor: pointer;
       font-weight: bold;
     }
-    button:hover {
+    button.auth-btn:hover {
       background-color: #d0b29d;
     }
   </style>
 </head>
 <body>
-  <h1>Lista Nozze Luigi & Giovanna</h1>
-
-  <div class="info-block">
-    <div class="label">IBAN</div>
-    <div class="data-copy">
-      <span id="iban">IT99X1234567890123456789012</span>
-      <button onclick="copyText('iban')">Copia</button>
-    </div>
+  <div id="auth-section">
+    <h2>Inserisci il PIN per accedere</h2>
+    <input type="password" id="pin-input" placeholder="PIN" />
+    <br />
+    <button class="auth-btn" onclick="checkPIN()">Accedi</button>
+    <p id="auth-error" style="color:red;"></p>
   </div>
 
-  <div class="info-block">
-    <div class="label">Beneficiario</div>
-    <div class="data-copy">
-      <span id="beneficiario">Luigi e Giovanna</span>
-      <button onclick="copyText('beneficiario')">Copia</button>
-    </div>
-  </div>
+  <div id="protected-content">
+    <h1>Lista Nozze Luigi & Giovanna</h1>
 
-  <div class="info-block">
-    <div class="label">Causale</div>
-    <div class="data-copy">
-      <span id="causale">Lista nozze Luigi & Giovanna</span>
-      <button onclick="copyText('causale')">Copia</button>
+    <div class="info-block">
+      <div class="label">IBAN</div>
+      <div class="data-copy">
+        <span id="iban">IT99X1234567890123456789012</span>
+        <button class="copy-btn" onclick="copyText('iban', this)">📋</button>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="label">Beneficiario</div>
+      <div class="data-copy">
+        <span id="beneficiario">Luigi e Giovanna</span>
+        <button class="copy-btn" onclick="copyText('beneficiario', this)">📋</button>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="label">Causale</div>
+      <div class="data-copy">
+        <span id="causale">Lista nozze Luigi & Giovanna</span>
+        <button class="copy-btn" onclick="copyText('causale', this)">📋</button>
+      </div>
     </div>
   </div>
 
   <script>
-    function copyText(elementId) {
+    function copyText(elementId, button) {
       const text = document.getElementById(elementId).innerText;
       navigator.clipboard.writeText(text).then(() => {
-        alert("Copiato: " + text);
+        button.textContent = '✅';
+        button.classList.add('copied');
+        setTimeout(() => {
+          button.textContent = '📋';
+          button.classList.remove('copied');
+        }, 1500);
       });
+    }
+
+    function checkPIN() {
+      const input = document.getElementById("pin-input").value;
+      const errorText = document.getElementById("auth-error");
+      if (input === "06122025") {
+        document.getElementById("auth-section").style.display = "none";
+        document.getElementById("protected-content").style.display = "block";
+      } else {
+        errorText.textContent = "PIN errato. Riprova.";
+      }
     }
   </script>
 </body>
