@@ -1,22 +1,38 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lista Nozze - Luigi & Giovanna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fdf6f0;
+      font-family: 'Open Sans', Arial, sans-serif; /* Default for most text */
+      background-image: url('http://googleusercontent.com/file_content/0'); /* Background from the image */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       color: #333;
       padding: 2rem;
       max-width: 500px;
       margin: 0 auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      margin-top: 50px;
+      margin-bottom: 50px;
     }
     h1 {
+      font-family: 'Great Vibes', cursive; /* Elegant font for names/headings */
       text-align: center;
       margin-bottom: 2rem;
+      color: #5a4b41; /* A dark, warm color for the heading */
+      font-size: 2.5rem;
+    }
+    h2 {
+      font-family: 'Open Sans', Arial, sans-serif;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #5a4b41;
     }
     .info-block {
       margin-bottom: 1.5rem;
@@ -24,15 +40,17 @@
     .label {
       font-weight: bold;
       margin-bottom: 0.3rem;
+      color: #4a4a4a;
     }
     .data-copy {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9); /* Slightly transparent white for readability */
       border: 1px solid #ccc;
       padding: 0.75rem 1rem;
       border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .copy-btn {
       background: none;
@@ -40,35 +58,52 @@
       cursor: pointer;
       font-size: 1.2rem;
       color: #333;
+      transition: color 0.3s ease;
     }
     .copy-btn.copied {
       color: green;
     }
     #auth-section {
       text-align: center;
-      margin-top: 100px;
+      padding: 3rem 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     #protected-content {
       display: none;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     input[type="password"] {
-      padding: 0.5rem;
-      font-size: 1rem;
+      padding: 0.7rem;
+      font-size: 1.1rem;
       border: 1px solid #ccc;
       border-radius: 6px;
       margin-bottom: 1rem;
-      width: 200px;
+      width: 220px;
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
     }
     button.auth-btn {
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1.5rem;
       background-color: #e0c7b2;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      color: #5a4b41;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
     }
     button.auth-btn:hover {
       background-color: #d0b29d;
+    }
+    #auth-error {
+      color:red;
+      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -78,7 +113,7 @@
     <input type="password" id="pin-input" placeholder="PIN" />
     <br />
     <button class="auth-btn" onclick="checkPIN()">Accedi</button>
-    <p id="auth-error" style="color:red;"></p>
+    <p id="auth-error"></p>
   </div>
 
   <div id="protected-content">
