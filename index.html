@@ -20,6 +20,7 @@
       border-radius: 10px;
       margin-top: 50px;
       margin-bottom: 50px;
+      position: relative; /* Needed for snackbar positioning */
     }
     h1 {
       font-family: 'Great Vibes', cursive; /* Elegant font for names/headings */
@@ -105,6 +106,53 @@
       margin-top: 10px;
       font-weight: bold;
     }
+
+    /* Snackbar styles */
+    #snackbar {
+      visibility: hidden; /* Hidden by default. Visible on click */
+      min-width: 250px; /* Set a default minimum width */
+      margin-left: -125px; /* Divide value of min-width by 2 */
+      background-color: #333; /* Black background color */
+      color: #fff; /* White text color */
+      text-align: center; /* Centered text */
+      border-radius: 2px; /* Rounded borders */
+      padding: 16px; /* Padding */
+      position: fixed; /* Sit on top of the screen */
+      z-index: 1; /* Add a z-index if needed (most snacks will need this) */
+      left: 50%; /* Center the snackbar */
+      bottom: 30px; /* 30px from the bottom */
+      font-size: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Show the snackbar when adding the 'show' class to the div with id 'snackbar' */
+    #snackbar.show {
+      visibility: visible; /* Show the snackbar */
+      /* Add animation: Take 0.5 seconds to fade in and out */
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    /* Animations for fade-in and fade-out */
+    @-webkit-keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+
+    @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+
+    @-webkit-keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+    }
+
+    @keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+    }
   </style>
 </head>
 <body>
@@ -123,7 +171,7 @@
       <div class="label">IBAN</div>
       <div class="data-copy">
         <span id="iban">IT99X1234567890123456789012</span>
-        <button class="copy-btn" onclick="copyText('iban', this)">📋</button>
+        <button class="copy-btn" onclick="copyText('iban', this, 'IBAN copiato!')">📋</button>
       </div>
     </div>
 
@@ -131,7 +179,7 @@
       <div class="label">Beneficiario</div>
       <div class="data-copy">
         <span id="beneficiario">Luigi e Giovanna</span>
-        <button class="copy-btn" onclick="copyText('beneficiario', this)">📋</button>
+        <button class="copy-btn" onclick="copyText('beneficiario', this, 'Beneficiario copiato!')">📋</button>
       </div>
     </div>
 
@@ -139,22 +187,36 @@
       <div class="label">Causale</div>
       <div class="data-copy">
         <span id="causale">Lista nozze Luigi & Giovanna</span>
-        <button class="copy-btn" onclick="copyText('causale', this)">📋</button>
+        <button class="copy-btn" onclick="copyText('causale', this, 'Causale copiata!')">📋</button>
       </div>
     </div>
   </div>
 
+  <div id="snackbar"></div>
+
   <script>
-    function copyText(elementId, button) {
+    function copyText(elementId, button, message) {
       const text = document.getElementById(elementId).innerText;
       navigator.clipboard.writeText(text).then(() => {
         button.textContent = '✅';
         button.classList.add('copied');
+        showSnackbar(message); // Show the snackbar with a specific message
         setTimeout(() => {
           button.textContent = '📋';
           button.classList.remove('copied');
         }, 1500);
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
       });
+    }
+
+    function showSnackbar(message) {
+      const snackbar = document.getElementById("snackbar");
+      snackbar.textContent = message; // Set the message
+      snackbar.classList.add("show");
+      setTimeout(function(){
+        snackbar.classList.remove("show");
+      }, 3000); // 3 seconds
     }
 
     function checkPIN() {
