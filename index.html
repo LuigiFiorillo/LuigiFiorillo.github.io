@@ -8,18 +8,15 @@
   <style>
     body {
       font-family: 'Open Sans', Arial, sans-serif; /* Default for most text */
-      background-image: url('http://googleusercontent.com/file_content/0'); /* Background from the image */
+      background-image: url('image.png'); /* Background from the image */
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       color: #333;
-      /* Rimuoviamo il flexbox dal body per gestire la centratura con position/transform */
-      /* display: flex; */
-      /* justify-content: center; */
-      /* align-items: center; */
       min-height: 100vh; /* Make body at least full viewport height */
       margin: 0; /* Remove default body margin */
-      position: relative; /* Needed for snackbar positioning AND for absolute positioning of card */
+      position: relative; /* Needed for snackbar positioning AND for absolute positioning of card and glitter */
+      overflow: hidden; /* Prevent glitter from causing scrollbars if slightly out of bounds */
     }
     h1 {
       font-family: 'Great Vibes', cursive; /* Elegant font for names/headings */
@@ -27,6 +24,12 @@
       margin-bottom: 2rem;
       color: #5a4b41; /* A dark, warm color for the heading */
       font-size: 2.5rem;
+      line-height: 1.2; /* Adjust line height for multiline heading */
+    }
+    h1 span {
+      display: block; /* Forces "Luigi e Giovanna" to a new line */
+      font-size: 1.8em; /* Make names slightly larger within the H1 */
+      margin-top: -0.2em; /* Adjust spacing between lines if needed */
     }
     h2 {
       font-family: 'Open Sans', Arial, sans-serif;
@@ -67,20 +70,19 @@
     #auth-section, #protected-content {
       max-width: 500px;
       width: calc(100% - 40px); /* Adjust width to account for 20px margin on each side */
-      margin: 20px auto; /* Add margin top/bottom and auto for left/right to center horizontally */
+      margin: 20px auto; /* Add margin on all sides, auto for horizontal centering */
       padding: 2rem;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       box-sizing: border-box; /* Include padding and border in the element's total width and height */
 
-      /* Nuovi stili per la centratura verticale */
+      /* Centratura verticale con position/transform */
       position: absolute; /* Posizionamento assoluto rispetto al body */
       top: 50%; /* Inizia al 50% dell'altezza del body */
       left: 50%; /* Inizia al 50% della larghezza del body */
       transform: translate(-50%, -50%); /* Sposta l'elemento indietro del 50% della sua propria larghezza e altezza */
-      /* Aggiungere una z-index per assicurarsi che sia sopra lo sfondo in caso di problemi */
-      z-index: 2;
+      z-index: 2; /* Assicurati che sia sopra gli effetti di glitter */
     }
     #auth-section {
       text-align: center;
@@ -164,9 +166,39 @@
       from {bottom: 30px; opacity: 1;}
       to {bottom: 0; opacity: 0;}
     }
+
+    /* Glitter Effects */
+    .glitter-overlay {
+        position: absolute;
+        width: 300px; /* Adjust size as needed */
+        height: 300px; /* Adjust size as needed */
+        background-image: url('image.png'); /* Use the same image as background for glitter */
+        background-size: cover; /* Cover the div with the background image */
+        background-repeat: no-repeat;
+        opacity: 0.2; /* Make it slightly transparent */
+        z-index: 1; /* Below the main content card */
+        pointer-events: none; /* Allows clicks to pass through */
+    }
+
+    .glitter-top-left {
+        top: -50px; /* Adjust to move it slightly off-screen or exactly where desired */
+        left: -50px; /* Adjust */
+        background-position: top left; /* Align background image to top left of this div */
+        transform: rotate(10deg); /* Slightly rotate for a more dynamic look */
+    }
+
+    .glitter-bottom-right {
+        bottom: -50px; /* Adjust */
+        right: -50px; /* Adjust */
+        background-position: bottom right; /* Align background image to bottom right of this div */
+        transform: rotate(-10deg); /* Slightly rotate in opposite direction */
+    }
   </style>
 </head>
 <body>
+  <div class="glitter-overlay glitter-top-left"></div>
+  <div class="glitter-overlay glitter-bottom-right"></div>
+
   <div id="main-content-wrapper">
     <div id="auth-section">
       <h2>Inserisci il PIN per accedere</h2>
@@ -177,7 +209,10 @@
     </div>
 
     <div id="protected-content">
-      <h1>Lista Nozze Luigi & Giovanna</h1>
+      <h1>
+        Lista nozze
+        <span>Luigi e Giovanna</span>
+      </h1>
 
       <div class="info-block">
         <div class="label">IBAN</div>
