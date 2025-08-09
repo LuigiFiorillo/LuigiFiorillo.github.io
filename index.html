@@ -9,14 +9,11 @@
   </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400&family=Cormorant+Garamond:wght@100;200;300;400;500;600;700&display=swap"
     rel="stylesheet">
   <style>
-    #protected-content {
-      display: none;
-    }
-
     .title {
       font-family: 'Great Vibes', cursive;
       font-size: 2.75rem;
@@ -43,7 +40,7 @@
       align-items: center;
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid #ccc;
-      padding: 0.75rem 1rem;
+      padding: 0.5rem;
       border-radius: 0.5rem;
       box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
     }
@@ -134,6 +131,95 @@
         opacity: 0;
       }
     }
+
+    body {
+      background-color: rgb(245, 243, 218);
+    }
+
+    .countdown-container {
+      margin: 2rem 0;
+    }
+
+    .countdown-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #5a4b41;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1rem;
+    }
+
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 4rem;
+    }
+
+    .countdown-number {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: #5a4b41;
+      line-height: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .countdown-number .decimals {
+      font-size: 1.5rem;
+      opacity: 0.8;
+      position: absolute;
+      left: 100%;
+      bottom: 0.25rem;
+    }
+
+    .countdown-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #8b7355;
+      margin-top: 0.25rem;
+      letter-spacing: 0.05rem;
+    }
+
+    .countdown-separator {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #8b7355;
+      margin-top: -0.25rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .countdown-timer {
+        gap: 0.25rem;
+      }
+
+      .countdown-item {
+        min-width: 3rem;
+      }
+
+      .countdown-number {
+        font-size: 2rem;
+      }
+
+      .countdown-label {
+        font-size: 0.8rem;
+      }
+
+      .countdown-separator {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 
@@ -142,44 +228,33 @@
     <div class="container pt-3 pt-md-5 mt-3 px-md-5">
       <div class="card border-0 shadow-lg py-4 py-md-5 rounded-3">
         <div class="card-body">
-          <div id="auth-section">
-            <h4>
-              Inserisci il PIN per accedere
-            </h4>
-            <div class="d-flex align-items-center gap-2">
-              <input type="password" id="pin-input" placeholder="PIN" />
-              <button class="btn btn-sm btn-dark" onclick="checkPIN()">Accedi</button>
-            </div>
-            <p id="auth-error"></p>
-          </div>
-          <div id="protected-content">
-            <h1 class="title text-center">
-              Lista nozze
-              <br />
-              Luigi e Giovanna
-            </h1>
+          <h1 class="title text-center">
+            Matrimonio
+            <br />
+            Luigi e Giovanna
+          </h1>
 
-            <div class="info-block">
-              <div class="label">IBAN</div>
-              <div class="data-copy">
-                <span id="iban">IT99X1234567890123456789012</span>
-                <button class="copy-btn" onclick="copyText('iban', this, 'IBAN copiato!')">📋</button>
+          <div class="countdown-container text-center mb-4">
+            <div class="countdown-title">Il nostro grande giorno tra</div>
+            <div class="countdown-timer">
+              <div class="countdown-item">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Giorni</span>
               </div>
-            </div>
-
-            <div class="info-block">
-              <div class="label">Beneficiario</div>
-              <div class="data-copy">
-                <span id="beneficiario">Luigi e Giovanna</span>
-                <button class="copy-btn" onclick="copyText('beneficiario', this, 'Beneficiario copiato!')">📋</button>
+              <div class="countdown-separator">:</div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Ore</span>
               </div>
-            </div>
-
-            <div class="info-block">
-              <div class="label">Causale</div>
-              <div class="data-copy">
-                <span id="causale">Lista nozze Luigi & Giovanna</span>
-                <button class="copy-btn" onclick="copyText('causale', this, 'Causale copiata!')">📋</button>
+              <div class="countdown-separator">:</div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minuti</span>
+              </div>
+              <div class="countdown-separator">:</div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00<span class="decimals">.0</span></span>
+                <span class="countdown-label">Secondi</span>
               </div>
             </div>
           </div>
@@ -218,16 +293,35 @@
       }, 3000); // 3 seconds
     }
 
-    function checkPIN() {
-      const input = document.getElementById("pin-input").value;
-      const errorText = document.getElementById("auth-error");
-      if (input === "06122025") {
-        document.getElementById("auth-section").style.display = "none";
-        document.getElementById("protected-content").style.display = "block";
+    // Countdown per il matrimonio (6 dicembre 2025 alle 10:30)
+    function updateCountdown() {
+      const weddingDate = new Date('2025-12-06T10:30:00');
+      const now = new Date();
+      const timeLeft = weddingDate - now;
+
+      if (timeLeft > 0) {
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        const tenths = Math.floor((timeLeft % 1000) / 100);
+
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+
+        const secondsElement = document.getElementById('seconds');
+        secondsElement.innerHTML = seconds.toString().padStart(2, '0') + '<span class="decimals">.' + tenths + '</span>';
       } else {
-        errorText.textContent = "PIN errato. Riprova.";
+        // Il matrimonio è arrivato!
+        document.querySelector('.countdown-title').textContent = 'Il nostro grande giorno è arrivato! 🎉';
+        document.querySelector('.countdown-timer').style.display = 'none';
       }
     }
+
+    // Aggiorna il countdown ogni decimo di secondo
+    setInterval(updateCountdown, 100);
+    updateCountdown(); // Prima chiamata immediata
   </script>
 </body>
 
